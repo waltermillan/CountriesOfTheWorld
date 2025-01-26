@@ -1,0 +1,101 @@
+/* Restablecer márgenes y rellenos globales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Contenedor principal */
+html, body {
+  height: 100%; /* Ocupa toda la altura disponible */
+  margin: 0; /* Elimina márgenes por defecto */
+  overflow: hidden; /* Evita el desplazamiento vertical de toda la página */
+}
+
+.container {
+  display: flex;
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+}
+
+.sidebar {
+  width: 20%;
+  padding: 20px;
+  background-color: #f4f4f4;
+  box-sizing: border-box;
+  height: 100vh; /* Se ajusta a la altura completa */
+  overflow-y: auto; /* Si el contenido de la izquierda es largo, permite desplazamiento solo en esta sección */
+}
+
+.main-content {
+  width: 80%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  height: 100%; /* Ocupa el 100% de la altura disponible en la parte derecha */
+  overflow-y: auto; /* Permite desplazamiento solo si es necesario */
+}
+
+/* Secciones de información */
+.info-section {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+/* Sección de Bandera y Mapa: imágenes lado a lado */
+.media-section {
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.flag, .map {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+audio {
+  margin-top: 10px;
+  max-width: 100%;
+}
+
+/* Añadir algo de padding a las secciones de info */
+.info-section p {
+  margin: 5px 0;
+}
+
+/* Responsividad: en pantallas pequeñas */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .main-content {
+    width: 100%;
+  }
+
+  .media-section {
+    flex-direction: column;
+  }
+
+  .flag, .map {
+    width: 100%;
+  }
+}
