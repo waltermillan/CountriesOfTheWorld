@@ -26,4 +26,4 @@ BBDD (postgreSQL)
 
 1. Clona el repositorio:
 
-git clone [https://github.com/waltermillan/ContriesOfTheWorld.git](https://github.com/waltermillan/ContriesOfTheWorld.git)
+git clone [https://github.com/waltermillan/CountriesOfTheWorld.git](https://github.com/waltermillan/CountriesOfTheWorld.git)
