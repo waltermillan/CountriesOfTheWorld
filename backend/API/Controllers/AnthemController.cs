@@ -4,7 +4,8 @@ using Core.Interfases;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
-
+[ApiController]
+[Route("api/anthems")] // Usamos el plural en la ruta para seguir la convención RESTful
 public class AnthemController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -17,7 +18,7 @@ public class AnthemController : BaseApiController
     }
 
     // Método existente: obtener todas los himnos
-    [HttpGet("GetAll")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<Anthem>>> Get()
@@ -35,7 +36,7 @@ public class AnthemController : BaseApiController
     }
 
     // Método existente: obtener un himno por su ID
-    [HttpGet("Get")]
+    [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -57,7 +58,7 @@ public class AnthemController : BaseApiController
     }
 
     // Método existente: agregar un himno
-    [HttpPost("Add")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Anthem>> Post(Anthem oAnthem)
@@ -82,7 +83,7 @@ public class AnthemController : BaseApiController
     }
 
     // Método existente: actualizar un himno
-    [HttpPut("Update")]
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -106,7 +107,7 @@ public class AnthemController : BaseApiController
     }
 
     // Método existente: eliminar un himno
-    [HttpDelete("Delete/{id}")]
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)

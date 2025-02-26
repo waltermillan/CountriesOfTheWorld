@@ -4,7 +4,8 @@ using Core.Interfases;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
-
+[ApiController]
+[Route("api/countries")] // Usamos el plural en la ruta para seguir la convención RESTful
 public class CountryController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -17,7 +18,7 @@ public class CountryController : BaseApiController
     }
 
     // Método existente: obtener todas los paises
-    [HttpGet("GetAll")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<Country>>> Get()
@@ -35,7 +36,7 @@ public class CountryController : BaseApiController
     }
 
     // Método existente: obtener un pais por su ID
-    [HttpGet("Get")]
+    [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -57,7 +58,7 @@ public class CountryController : BaseApiController
     }
 
     // Método existente: agregar un pais
-    [HttpPost("Add")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Country>> Post(Country oCountry)
@@ -83,7 +84,7 @@ public class CountryController : BaseApiController
     }
 
     // Método existente: actualizar un pais
-    [HttpPut("Update")]
+    [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -107,7 +108,7 @@ public class CountryController : BaseApiController
     }
 
     // Método existente: eliminar un pais
-    [HttpDelete("Delete/{id}")]
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)

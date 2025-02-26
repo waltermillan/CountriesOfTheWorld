@@ -23,14 +23,12 @@ export class InfoComponent implements OnInit {
 
   constructor(private http: HttpClient) {}
 
-  // Método para obtener la ruta de la imagen de la bandera
   getFlagImage(countryCode:number) {
         if (this.flagImage) {
       this.flagImage.nativeElement.src = `assets/images/flags/${countryCode}.jpg`;
     }
   }
 
-  // Método para obtener la ruta de la imagen del mapa
   getMapImage(countryCode:number): string {
     return `assets/images/maps/${countryCode}.jpg`; 
   }
@@ -45,7 +43,7 @@ export class InfoComponent implements OnInit {
 
   getCountryInfo(countryCode:any) {
     
-    const url = `http://localhost:5184/api/Country/Get?id=${countryCode}`;
+    const url = `http://localhost:5184/api/countries/${countryCode}`;
     this.http.get<any>(url).subscribe((data) => {
       this.countryInfo = data;
       this.getGovermentInfo(); 
@@ -56,7 +54,7 @@ export class InfoComponent implements OnInit {
   }
 
   getGovermentInfo():void{
-    const url = `http://localhost:5184/api/Goverment/Get?id=${this.countryInfo?.govermentId}`;
+    const url = `http://localhost:5184/api/goverments/${this.countryInfo?.govermentId}`;
     console.log('url: ' + url);
     this.http.get<any>(url).subscribe((data) => {
       this.govermentInfo = data;
@@ -64,7 +62,7 @@ export class InfoComponent implements OnInit {
   }
 
   getLanguageInfo():void {
-    const url = `http://localhost:5184/api/Language/Get?id=${this.countryInfo?.languageId}`;
+    const url = `http://localhost:5184/api/languages/${this.countryInfo?.languageId}`;
     console.log('url: ' + url);
     this.http.get<any>(url).subscribe((data) => {
       this.languageInfo = data;
@@ -72,7 +70,7 @@ export class InfoComponent implements OnInit {
   }
 
   getContinentInfo():void {
-    const url = `http://localhost:5184/api/Continent/Get?id=${this.countryInfo?.continentId}`;
+    const url = `http://localhost:5184/api/continents/${this.countryInfo?.continentId}`;
     console.log('url: ' + url);
     this.http.get<any>(url).subscribe((data) => {
       this.continentInfo = data;
@@ -80,7 +78,7 @@ export class InfoComponent implements OnInit {
   }
 
   getAnthemInfo():void {
-    const url = `http://localhost:5184/api/Anthem/Get?id=${this.countryInfo?.anthemId}`;
+    const url = `http://localhost:5184/api/anthems/${this.countryInfo?.anthemId}`;
     console.log('url: ' + url);
     this.http.get<any>(url).subscribe((data) => {
       this.anthemInfo = data;
@@ -96,14 +94,12 @@ export class InfoComponent implements OnInit {
   }
 
   getAllCountries():void{
-    // Llamada a la API para obtener la lista de países
-    this.http.get<any>('http://localhost:5184/api/Country/GetAll').subscribe((data: any) => {
+    this.http.get<any>('http://localhost:5184/api/countries/').subscribe((data: any) => {
     this.countries = data.sort((a: any, b: any) => a.spanishName.localeCompare(b.spanishName));
     });
   }
 
   onCountrySelect() {
-    // Aquí puedes realizar alguna acción cuando se selecciona un país
     console.log(this.selectedCountry);
     this.getCountryInfo(this.selectedCountry);
   }
