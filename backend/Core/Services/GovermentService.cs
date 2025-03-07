@@ -16,16 +16,15 @@ namespace Core.Services
         public GovermentService(IGovermentRepository govermentRepository)
         {
             _govermentRepository = govermentRepository;
-            
         }
 
         public async Task<Goverment> GetGovermentById(int id)
         { 
             var goverment = await _govermentRepository.GetByIdAsync(id);
-            if (goverment == null)
-            {
+
+            if (goverment is null)
                 throw new KeyNotFoundException("Goverment not found");
-            }
+
             return goverment;
         }
 
@@ -47,20 +46,20 @@ namespace Core.Services
         public void UpdateGoverment(Goverment goverment)
         {
             var existingGoverment = _govermentRepository.GetByIdAsync(goverment.Id).Result;
-            if (existingGoverment == null)
-            {
+
+            if (existingGoverment is null)
                 throw new KeyNotFoundException("Goverment to update not found");
-            }
+
             _govermentRepository.Update(goverment);
         }
 
         public void DeleteGoverment(Goverment goverment)
         {
             var existingGoverment = _govermentRepository.GetByIdAsync(goverment.Id).Result;
-            if (existingGoverment == null)
-            {
+
+            if (existingGoverment is null)
                 throw new KeyNotFoundException("Goverment to delete not found");
-            }
+
             _govermentRepository.Remove(goverment);
         }
     }

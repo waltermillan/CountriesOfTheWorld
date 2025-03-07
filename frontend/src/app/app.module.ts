@@ -8,9 +8,9 @@ import { AppRoutingModule } from './app-routing.module';  // Asegúrate de impor
 import { AppComponent } from './app.component';
 import { InfoComponent } from './info/info.component';
 import { registerLocaleData } from '@angular/common';
-import localeEs from '@angular/common/locales/es';  // Importamos el locale español (España)
+import localeEs from '@angular/common/locales/es';  // We import the Spanish locale (Spain)
 
-registerLocaleData(localeEs, 'es-ES');  // Registramos el locale
+registerLocaleData(localeEs, 'es-ES');  // Registry locale
 
 @NgModule({
   declarations: [

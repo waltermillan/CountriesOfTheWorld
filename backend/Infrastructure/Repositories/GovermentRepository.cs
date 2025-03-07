@@ -7,21 +7,17 @@ namespace Infrastructure.Repositories;
 
 public class GovermentRepository(CountriesContext context) : GenericRepository<Goverment>(context), IGovermentRepository
 {
-
-    // Método existente
     public override async Task<Goverment> GetByIdAsync(int id)
     {
         return await _context.Goverments
                           .FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    // Método existente
     public override async Task<IEnumerable<Goverment>> GetAllAsync()
     {
         return await _context.Goverments.ToListAsync();
     }
 
-    // Método existente para paginación y búsqueda
     public override async Task<(int totalRegistros, IEnumerable<Goverment> registros)> GetAllAsync(
                 int pageIndex, int pageSize, string search)
     {

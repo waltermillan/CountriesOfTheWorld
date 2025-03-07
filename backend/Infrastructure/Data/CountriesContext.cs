@@ -23,10 +23,8 @@ namespace Infrastructure.Data
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Lee el connection string desde el archivo appsettings.json
             var connectionString = _configuration.GetConnectionString("CountriesConnection");
             optionsBuilder.UseNpgsql(connectionString);
-
         }
     }
 }

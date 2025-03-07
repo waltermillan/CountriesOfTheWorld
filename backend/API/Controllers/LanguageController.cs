@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 [ApiController]
-[Route("api/languages")] // Usamos el plural en la ruta para seguir la convención RESTful
+[Route("api/languages")] // We use the plural in the path to follow the RESTful convention
 public class LanguageController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -17,7 +17,6 @@ public class LanguageController : BaseApiController
         _mapper = mapper;
     }
 
-    // Método existente: obtener todas los lenguajes
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -30,12 +29,10 @@ public class LanguageController : BaseApiController
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message });
         }
     }
 
-    // Método existente: obtener un lenguaje por su ID
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -45,14 +42,14 @@ public class LanguageController : BaseApiController
         try
         {
             var language = await _unitOfWork.Languages.GetByIdAsync(id);
-            if (language == null)
+
+            if (language is null)
                 return NotFound();
 
             return _mapper.Map<Language>(language);
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message });
         }
     }
@@ -68,21 +65,19 @@ public class LanguageController : BaseApiController
             var language = _mapper.Map<Language>(oLanguage);
             _unitOfWork.Languages.Add(language);
             await _unitOfWork.SaveAsync();
-            if (language == null)
-            {
+
+            if (language is null)
                 return BadRequest();
-            }
+
             oLanguage.Id = language.Id;
             return CreatedAtAction(nameof(Post), new { id = oLanguage.Id }, oLanguage);
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message });
         }
     }
 
-    // Método existente: actualizar un lenguaje
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -91,7 +86,7 @@ public class LanguageController : BaseApiController
     {
         try
         {
-            if (oLanguage == null)
+            if (oLanguage is null)
                 return NotFound();
 
             var language = _mapper.Map<Language>(oLanguage);
@@ -101,12 +96,10 @@ public class LanguageController : BaseApiController
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message });
         }
     }
 
-    // Método existente: eliminar un lenguaje
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -115,7 +108,8 @@ public class LanguageController : BaseApiController
         try
         {
             var language = await _unitOfWork.Languages.GetByIdAsync(id);
-            if (language == null)
+
+            if (language is null)
                 return NotFound();
 
             _unitOfWork.Languages.Remove(language);
@@ -125,7 +119,6 @@ public class LanguageController : BaseApiController
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message });
         }
     }

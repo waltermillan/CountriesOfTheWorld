@@ -21,10 +21,9 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     {
         get
         {
-            if (_countries == null)
-            {
+            if (_countries is null)
                 _countries = new CountryRepository(_context);
-            }
+
             return _countries;
         }
     }
@@ -33,10 +32,9 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     {
         get
         {
-            if (_languages == null)
-            {
+            if (_languages is null)
                 _languages = new LanguageRepository(_context);
-            }
+
             return _languages;
         }
     }
@@ -45,10 +43,9 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     {
         get
         {
-            if (_continents == null)
-            {
+            if (_continents is null)
                 _continents = new ContinentRepository(_context);
-            }
+
             return _continents;
         }
     }
@@ -57,10 +54,9 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     {
         get
         {
-            if (_anthems == null)
-            {
+            if (_anthems is null)
                 _anthems = new AnthemRepository(_context);
-            }
+
             return _anthems;
         }
     }
@@ -69,10 +65,9 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     {
         get
         {
-            if (_goverments == null)
-            {
+            if (_goverments is null)
                 _goverments = new GovermentRepository(_context);
-            }
+
             return _goverments;
         }
     }

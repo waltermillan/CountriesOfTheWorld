@@ -58,7 +58,7 @@ namespace Tests.UnitTests
         [Fact]
         public void AddLanguage_AddsLanguage_WhenLanguageIsValid()
         {
-            // arrange
+            // Arrange
             var mockLanguageRepository = new Mock<ILanguageRepository>();
             var language = new Language { Id = 9, Name = "Language1" };
 
@@ -66,10 +66,10 @@ namespace Tests.UnitTests
 
             var languageService = new LanguageService(mockLanguageRepository.Object);
 
-            // act
+            // Act
             languageService.AddLanguage(language);
 
-            // assert
+            // Assert
             mockLanguageRepository.Verify(repo => repo.Add(It.Is<Language>(c => c.Name == "Language1" && c.Id == 9)), Times.Once);
         }
 
@@ -84,7 +84,6 @@ namespace Tests.UnitTests
                     new Language { Id = 13, Name = "Language2" }
                 };
 
-            // Configuramos el mock para verificar que AddRange sea llamado con la lista correcta de gobiernos
             mockLanguageRepository.Setup(repo => repo.AddRange(It.IsAny<IEnumerable<Language>>()));
 
             var languageService = new LanguageService(mockLanguageRepository.Object);
@@ -99,43 +98,40 @@ namespace Tests.UnitTests
         [Fact]
         public void UpdateLanguage_UpdatesLanguage_WhenLanguageIsValid()
         {
-            // arrange
+            // Arrange
             var mockLanguageRepository = new Mock<ILanguageRepository>();
             var language = new Language { Id = 9, Name = "NewLanguage1" };
 
-            // Configuramos el mock para que devuelva el lenguaje que estamos eliminando
             mockLanguageRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Language { Id = 9, Name = "NewLanguage1" }); // Simulamos que el continente con Id 9 existe
-
 
             mockLanguageRepository.Setup(repo => repo.Add(It.IsAny<Language>()));
 
             var languageService = new LanguageService(mockLanguageRepository.Object);
 
-            // act
+            // Act
             languageService.UpdateLanguage(language);
 
-            // assert
+            // Assert
             mockLanguageRepository.Verify(repo => repo.Update(It.Is<Language>(c => c.Name == "NewLanguage1" && c.Id == 9)), Times.Once);
         }
 
         [Fact]
         public void DeleteLanguage_DeletesLanguage_WhenLanguageExists()
         {
-            // arrange
+            // Arrange
             var mockLanguageRepository = new Mock<ILanguageRepository>();
             var language = new Language { Id = 9, Name = "Language1" };
 
-            // Configuramos el mock para que devuelva el lenguage que estamos eliminando
             mockLanguageRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Language { Id = 9, Name = "Language1" }); // Simulamos que el languaje con Id 9 existe
 
             mockLanguageRepository.Setup(repo => repo.Remove(It.IsAny<Language>()));
 
             var languageService = new LanguageService(mockLanguageRepository.Object);
 
-            // act
+            //Act
             languageService.DeleteLanguage(language);
 
-            // assert
+            //Assert
             mockLanguageRepository.Verify(repo => repo.Remove(It.Is<Language>(c => c.Name == "Language1" && c.Id == 9)), Times.Once);
         }
 
@@ -161,7 +157,6 @@ namespace Tests.UnitTests
             var mockLanguageRepository = new Mock<ILanguageRepository>();
             var languageId = 999; // ID que no existe en la base de datos
 
-            // Configuramos el mock para que devuelva el lenguage que estamos buscando
             mockLanguageRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Language { Id = 999, Name = "Language" }); // Simulamos que el languaje con Id 999 que no existe
 
             mockLanguageRepository.Setup(repo => repo.GetByIdAsync(languageId)).ReturnsAsync((Language)null); // Simulamos que no se encuentra el continente.

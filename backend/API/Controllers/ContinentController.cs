@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 [ApiController]
-[Route("api/continents")] // Usamos el plural en la ruta para seguir la convención RESTful
+[Route("api/continents")] // We use the plural in the path to follow the RESTful convention
 public class ContinentController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -18,7 +18,6 @@ public class ContinentController : BaseApiController
         _mapper = mapper;
     }
 
-    // Método existente: obtener todas los continentes
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -31,12 +30,10 @@ public class ContinentController : BaseApiController
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message });
         }
     }
 
-    // Método existente: obtener un continente por su ID
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -46,19 +43,18 @@ public class ContinentController : BaseApiController
         try
         {
             var continent = await _unitOfWork.Continents.GetByIdAsync(id);
-            if (continent == null)
+
+            if (continent is null)
                 return NotFound();
 
             return _mapper.Map<Continent>(continent);
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message });
         }
     }
 
-    // Método existente: agregar un pais
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -69,21 +65,19 @@ public class ContinentController : BaseApiController
             var continent = _mapper.Map<Continent>(oContinent);
             _unitOfWork.Continents.Add(continent);
             await _unitOfWork.SaveAsync();
-            if (continent == null)
-            {
+
+            if (continent is null)
                 return BadRequest();
-            }
+
             oContinent.Id = continent.Id;
             return CreatedAtAction(nameof(Post), new { id = oContinent.Id }, oContinent);
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message });
         }
     }
 
-    // Método existente: actualizar un continente
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -92,7 +86,7 @@ public class ContinentController : BaseApiController
     {
         try
         {
-            if (oContinent == null)
+            if (oContinent is null)
                 return NotFound();
 
             var continent = _mapper.Map<Continent>(oContinent);
@@ -102,12 +96,10 @@ public class ContinentController : BaseApiController
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message });
         }
     }
 
-    // Método existente: eliminar un continente
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -116,7 +108,8 @@ public class ContinentController : BaseApiController
         try
         {
             var continent = await _unitOfWork.Continents.GetByIdAsync(id);
-            if (continent == null)
+
+            if (continent is null)
                 return NotFound();
 
             _unitOfWork.Continents.Remove(continent);
@@ -126,7 +119,6 @@ public class ContinentController : BaseApiController
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the continents. Please try again later.", Details = ex.Message });
         }
     }

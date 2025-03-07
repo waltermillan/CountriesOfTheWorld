@@ -7,21 +7,17 @@ namespace Infrastructure.Repositories;
 
 public class AnthemRepository(CountriesContext context) : GenericRepository<Anthem>(context), IAnthemRepository
 {
-
-    // Método existente
     public override async Task<Anthem> GetByIdAsync(int id)
     {
         return await _context.Anthems
                           .FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    // Método existente
     public override async Task<IEnumerable<Anthem>> GetAllAsync()
     {
         return await _context.Anthems.ToListAsync();
     }
 
-    // Método existente para paginación y búsqueda
     public override async Task<(int totalRegistros, IEnumerable<Anthem> registros)> GetAllAsync(
                 int pageIndex, int pageSize, string search)
     {

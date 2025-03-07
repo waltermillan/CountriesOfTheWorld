@@ -11,29 +11,13 @@ public static class ApplicationServiceExtensions
         services.AddCors(options =>
         {
             options.AddPolicy("AllowLocalhost", builder =>
-                builder.AllowAnyOrigin() // Permite cualquier origen
+                builder.AllowAnyOrigin() // Allow any orign
                        .AllowAnyMethod()
                        .AllowAnyHeader());
         });
 
-
     public static void AddAplicacionServices(this IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-    }
-
-    public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-        // Usar CORS
-        app.UseCors("AllowLocalhost");
-
-        // Otros middlewares
-        app.UseRouting();
-        app.UseAuthorization();
-
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-        });
     }
 }

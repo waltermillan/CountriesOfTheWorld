@@ -49,7 +49,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseRouting();
-app.UseCors("AllowLocalhost"); // CORS debe estar antes de cualquier otra configuración
+app.UseCors("AllowLocalhost");
 app.UseAuthorization();
 app.MapControllers();
 

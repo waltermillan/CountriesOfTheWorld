@@ -7,27 +7,23 @@
     </select>
   </div>
 <hr>
-  <!-- Parte derecha: Información del país -->
   <div style="width: 80%; padding: 20px; display: flex; flex-direction: column; gap: 20px;">
     <div *ngIf="countryInfo; else loading">
       <!-- Nombre del país -->
       <h2>{{ countryInfo.spanishName }} ( {{ countryInfo.name }} )</h2>
-
-      <!-- Información general: Población, Superficie, Independencia -->
+>
       <div class="info-section">
         <p><strong>Población:</strong> {{ countryInfo.population | number:'1.0-0':'es-ES' }} habitantes</p>
         <p><strong>Superficie:</strong> {{ countryInfo.surface | number:'1.0-0':'es-ES' }} km²</p>
         <p><strong>Independencia:</strong> {{ countryInfo.independenceDay | date:'dd/MM/yyyy' }}</p>
       </div>
 
-      <!-- Información adicional: Gobierno, Idioma, Continente -->
       <div class="info-section">
         <p><strong>Forma de Gobierno:</strong> {{ govermentInfo?.name }}</p>
         <p><strong>Idioma:</strong> {{ languageInfo?.name }}</p>
         <p><strong>Continente:</strong> {{ continentInfo?.name }}</p>
       </div>
 
-      <!-- Himno -->
       <div class="info-section">
         <p><strong>Himno:</strong> {{ anthemInfo?.motto }}</p>
         <audio *ngIf="anthemInfo?.content" [src]="anthemInfo?.content" controls>
@@ -35,7 +31,6 @@
         </audio>
       </div>
 
-      <!-- Sección de imágenes: Bandera y Mapa -->
       <div style="display: flex; gap: 30px; justify-content: space-between;">
         <div style="flex: 1;">
           <h4>Bandera</h4>

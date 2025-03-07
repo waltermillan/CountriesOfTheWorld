@@ -20,10 +20,10 @@ public class LanguageService
     public async Task<Language> GetLanguageById(int id)
     {
         var language = await _languageRepository.GetByIdAsync(id);
-        if (language == null)
-        {
-            throw new KeyNotFoundException("Language not found"); // Mensaje de excepción correcto
-        }
+
+        if (language is null)
+            throw new KeyNotFoundException("Language not found");
+
         return language;
     }
 
@@ -45,20 +45,20 @@ public class LanguageService
     public void UpdateLanguage(Language language)
     {
         var existingLanguage = _languageRepository.GetByIdAsync(language.Id).Result;
-        if (existingLanguage == null)
-        {
+
+        if (existingLanguage is null)
             throw new KeyNotFoundException("Language to update not found");
-        }
+
         _languageRepository.Update(language);
     }
 
     public void DeleteLanguage(Language language)
     {
         var existingLanguage = _languageRepository.GetByIdAsync(language.Id).Result;
-        if (existingLanguage == null)
-        {
+
+        if (existingLanguage is null)
             throw new KeyNotFoundException("Language to delete not found");
-        }
+
         _languageRepository.Remove(language);
     }
 }

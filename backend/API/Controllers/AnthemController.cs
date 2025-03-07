@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 [ApiController]
-[Route("api/anthems")] // Usamos el plural en la ruta para seguir la convención RESTful
+[Route("api/anthems")] // We use the plural in the path to follow the RESTful convention
 public class AnthemController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -17,7 +17,6 @@ public class AnthemController : BaseApiController
         _mapper = mapper;
     }
 
-    // Método existente: obtener todas los himnos
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -30,12 +29,10 @@ public class AnthemController : BaseApiController
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the anthems. Please try again later.", Details = ex.Message });
         }
     }
 
-    // Método existente: obtener un himno por su ID
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -45,19 +42,18 @@ public class AnthemController : BaseApiController
         try
         {
             var anthem = await _unitOfWork.Anthems.GetByIdAsync(id);
-            if (anthem == null)
+
+            if (anthem is null)
                 return NotFound();
 
             return _mapper.Map<Anthem>(anthem);
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the anthems. Please try again later.", Details = ex.Message });
         }
     }
 
-    // Método existente: agregar un himno
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -68,21 +64,19 @@ public class AnthemController : BaseApiController
             var anthem = _mapper.Map<Anthem>(oAnthem);
             _unitOfWork.Anthems.Add(anthem);
             await _unitOfWork.SaveAsync();
-            if (anthem == null)
-            {
+
+            if (anthem is null)
                 return BadRequest();
-            }
+
             oAnthem.Id = anthem.Id;
             return CreatedAtAction(nameof(Post), new { id = oAnthem.Id }, oAnthem);
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the anthems. Please try again later.", Details = ex.Message });
         }
     }
 
-    // Método existente: actualizar un himno
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -91,7 +85,7 @@ public class AnthemController : BaseApiController
     {
         try
         {
-            if (oAnthem == null)
+            if (oAnthem is null)
                 return NotFound();
 
             var anthem = _mapper.Map<Anthem>(oAnthem);
@@ -101,12 +95,10 @@ public class AnthemController : BaseApiController
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the anthems. Please try again later.", Details = ex.Message });
         }
     }
 
-    // Método existente: eliminar un himno
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -115,7 +107,8 @@ public class AnthemController : BaseApiController
         try
         {
             var anthem = await _unitOfWork.Anthems.GetByIdAsync(id);
-            if (anthem == null)
+
+            if (anthem is null)
                 return NotFound();
 
             _unitOfWork.Anthems.Remove(anthem);
@@ -125,7 +118,6 @@ public class AnthemController : BaseApiController
         }
         catch (Exception ex)
         {
-            // Loggeamos el error para fines de depuración y luego devolvemos una respuesta con un mensaje amigable
             return StatusCode(500, new { Message = "There was an issue retrieving the anthems. Please try again later.", Details = ex.Message });
         }
     }

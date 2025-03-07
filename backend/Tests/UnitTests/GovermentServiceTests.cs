@@ -56,7 +56,7 @@ public class GovermentServiceTests
     [Fact]
     public void AddGoverment_AddsGoverment_WhenGovermentIsValid()
     {
-        // arrange
+        // Arrange
         var mockGovermentRepository = new Mock<IGovermentRepository>();
         var goverment = new Goverment { Id = 9, Name = "Goverment1" };
 
@@ -64,10 +64,10 @@ public class GovermentServiceTests
 
         var govermentService = new GovermentService(mockGovermentRepository.Object);
 
-        // act
+        // Act
         govermentService.AddGoverment(goverment);
 
-        // assert
+        // Assert
         mockGovermentRepository.Verify(repo => repo.Add(It.Is<Goverment>(c => c.Name == "Goverment1" && c.Id == 9)), Times.Once);
     }
 
@@ -82,7 +82,6 @@ public class GovermentServiceTests
         new Goverment { Id = 13, Name = "Goverment2" }
     };
 
-        // Configuramos el mock para verificar que AddRange sea llamado con la lista correcta de gobiernos
         mockGovermentRepository.Setup(repo => repo.AddRange(It.IsAny<IEnumerable<Goverment>>()));
 
         var govermentService = new GovermentService(mockGovermentRepository.Object);
@@ -97,42 +96,40 @@ public class GovermentServiceTests
     [Fact]
     public void UpdateGoverment_UpdatesGoverment_WhenGovermentIsValid()
     {
-        // arrange
+        // Arrange
         var mockGovermentRepository = new Mock<IGovermentRepository>();
         var goverment = new Goverment { Id = 9, Name = "NewGoverment1" };
 
-        // Configuramos el mock para que devuelva el gobierno que estamos eliminando
         mockGovermentRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Goverment { Id = 9, Name = "NewGoverment1" }); // Simulamos que el continente con Id 9 existe
 
         mockGovermentRepository.Setup(repo => repo.Add(It.IsAny<Goverment>()));
 
         var govermentService = new GovermentService(mockGovermentRepository.Object);
 
-        // act
+        // Act
         govermentService.UpdateGoverment(goverment);
 
-        // assert
+        // Assert
         mockGovermentRepository.Verify(repo => repo.Update(It.Is<Goverment>(c => c.Name == "NewGoverment1" && c.Id == 9)), Times.Once);
     }
 
     [Fact]
     public void DeleteGoverment_DeletesGoverment_WhenGovermentExists()
     {
-        // arrange
+        // Arrange
         var mockGovermentRepository = new Mock<IGovermentRepository>();
         var goverment = new Goverment { Id = 9, Name = "Goverment1" };
 
-        // Configuramos el mock para que devuelva el gobierno que estamos eliminando
         mockGovermentRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Goverment { Id = 9, Name = "Goverment1" }); // Simulamos que el continente con Id 9 existe
 
         mockGovermentRepository.Setup(repo => repo.Remove(It.IsAny<Goverment>()));
 
         var govermentService = new GovermentService(mockGovermentRepository.Object);
 
-        // act
+        // Act
         govermentService.DeleteGoverment(goverment);
 
-        // assert
+        // Assert
         mockGovermentRepository.Verify(repo => repo.Remove(It.Is<Goverment>(c => c.Name == "Goverment1" && c.Id == 9)), Times.Once);
     }
 

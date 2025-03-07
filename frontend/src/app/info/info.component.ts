@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ElementRef,AfterViewInit  } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Country } from '../models/country.model';
 import { Goverment } from '../models/goverment.model';

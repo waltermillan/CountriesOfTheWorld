@@ -2,10 +2,10 @@ export interface Country {
     id: number;
     name: string;
     spanishName: string;
-    population: number; // Cambié de string a number
+    population: number;
     surface: number;
-    independenceDay: Date; // Corregí la ortografía
-    govermentId: number;  // Corregí la ortografía
+    independenceDay: Date;
+    govermentId: number;
     languageId: number;
     continentId: number;
     anthemId: number;

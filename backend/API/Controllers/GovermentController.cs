@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 [ApiController]
-[Route("api/goverments")] // Usamos el plural en la ruta para seguir la convención RESTful
+[Route("api/goverments")] // We use the plural in the path to follow the RESTful convention
 public class GovermentController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;

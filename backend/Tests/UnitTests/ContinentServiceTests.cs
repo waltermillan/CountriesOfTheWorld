@@ -45,7 +45,7 @@ public class ContinentServiceTests
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(2, result.Count()); // Usamos Count() para contar los elementos
+        Assert.Equal(2, result.Count());
         Assert.Contains(result, p => p.Name == "Continent1");
         Assert.Contains(result, p => p.Name == "Continent2");
     }
@@ -53,7 +53,7 @@ public class ContinentServiceTests
     [Fact]
     public void AddContinent_AddsContinent_WhenContinentIsValid()
     {
-        // arrange
+        // Arrange
         var mockContinentRepository = new Mock<IContinentRepository>();
         var continent = new Continent { Id = 9, Name = "Continent1" };
 
@@ -61,10 +61,10 @@ public class ContinentServiceTests
 
         var continentService = new ContinentService(mockContinentRepository.Object);
 
-        // act
+        // Act
         continentService.AddContinent(continent);
 
-        // assert
+        // Assert
         mockContinentRepository.Verify(repo => repo.Add(It.Is<Continent>(c => c.Name == "Continent1" && c.Id == 9)), Times.Once);
     }
 
@@ -79,7 +79,6 @@ public class ContinentServiceTests
                 new Continent { Id = 13, Name = "Continent2" }
             };
 
-        // Configuramos el mock para verificar que AddRange sea llamado con la lista correcta de continentes
         mockContinentRepository.Setup(repo => repo.AddRange(It.IsAny<IEnumerable<Continent>>()));
 
         var continentService = new ContinentService(mockContinentRepository.Object);
@@ -91,63 +90,63 @@ public class ContinentServiceTests
         mockContinentRepository.Verify(repo => repo.AddRange(It.Is<IEnumerable<Continent>>(c => c.Count() == 2 && c.Any(x => x.Name == "Continent1") && c.Any(x => x.Name == "Continent2"))), Times.Once);
     }
 
+    /*
+        1. Arrange (Prepare) => In this phase, you prepare a mock object.
+        2. Mock (Simulation) => A mock is a simulated object that mimics the behavior of a real object in a unit test.
+        3. Act (Execute) => In this phase, the action or method we are testing is executed. 
+        4. Assert (Verify) => In this phase, we verify that the result of the executed action meets our expectations.
+    */
+
+
     [Fact]
     public void UpdateContinent_UpdatesContinent_WhenContinentIsValid()
     {
-        /*
-            1. Arrange (Preparar) => En esta fase, se prepar
-            2. Mock (Simulación) => Un mock es un objeto simulado que imita el comportamiento de un objeto real en una prueba unitaria.
-            3. Act (Ejecutar) => En esta fase, se ejecuta la acción o método que estamos probando. 
-            4. Assert (Verificar) => En esta fase, verificamos que el resultado de la acción ejecutada cumpla con nuestras expectativas.
-         */
 
-        //1- arrange
+        // Arrange
         var mockContinentRepository = new Mock<IContinentRepository>();
         var continent = new Continent { Id = 9, Name = "NewContinent1" };
 
-        //2- Configuramos el mock para que devuelva el continente que estamos actualizando
-        mockContinentRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Continent { Id = 9, Name = "Continent1" }); // Simulamos que el continente con Id 9 existe
+        mockContinentRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Continent { Id = 9, Name = "Continent1" });
         mockContinentRepository.Setup(repo => repo.Update(It.IsAny<Continent>()));
         var continentService = new ContinentService(mockContinentRepository.Object);
 
-        //3- act
+        // Act
         continentService.UpdateContinent(continent);
 
-        //4- assert
+        // Assert
         mockContinentRepository.Verify(repo => repo.Update(It.Is<Continent>(c => c.Name == "NewContinent1" && c.Id == 9)), Times.Once);
     }
 
     [Fact]
     public void DeleteContinent_DeletesContinent_WhenContinentExists()
     {
-        //1- arrange
+        // Arrange
         var mockContinentRepository = new Mock<IContinentRepository>();
         var continent = new Continent { Id = 9, Name = "Continent1" };
 
-        //2- Configuramos el mock para que devuelva el continente que estamos eliminando
-        mockContinentRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Continent { Id = 9, Name = "Continent1" }); // Simulamos que el continente con Id 9 existe
+        mockContinentRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Continent { Id = 9, Name = "Continent1" });
         mockContinentRepository.Setup(repo => repo.Remove(It.IsAny<Continent>()));
         var continentService = new ContinentService(mockContinentRepository.Object);
 
-        //3- act
+        // Act
         continentService.DeleteContinent(continent);
 
-        //4- assert
+        // Assert
         mockContinentRepository.Verify(repo => repo.Remove(It.Is<Continent>(c => c.Name == "Continent1" && c.Id == 9)), Times.Once);
     }
 
     [Fact]
     public async Task GetContinentById_ThrowsException_WhenContinentDoesNotExist()
     {
-        //1- Arrange
+        // Arrange
         var mockContinentRepository = new Mock<IContinentRepository>();
-        var continentId = 999; // ID que no existe en la base de datos
-        mockContinentRepository.Setup(repo => repo.GetByIdAsync(continentId)).ReturnsAsync((Continent)null); // Simulamos que no se encuentra el continente.
+        var continentId = 999;
+        mockContinentRepository.Setup(repo => repo.GetByIdAsync(continentId)).ReturnsAsync((Continent)null);
 
         var continentService = new ContinentService(mockContinentRepository.Object);
 
-        //2- Act & Assert
+        // Act & Assert
         var exception = await Assert.ThrowsAsync<KeyNotFoundException>(() => continentService.GetContinentById(continentId));
-        Assert.Equal("Continent not found", exception.Message); // Verificamos que el mensaje de la excepción sea el esperado
+        Assert.Equal("Continent not found", exception.Message);
     }
 }

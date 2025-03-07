@@ -21,11 +21,10 @@ namespace Core.Services
         public async Task<Continent> GetContinentById(int id)
         {
             var continent = await _continentRepository.GetByIdAsync(id);
-            if (continent == null)
-            {
-                // Puedes lanzar una excepción o devolver un valor por defecto, dependiendo de tu lógica.
+
+            if (continent is null)
                 throw new KeyNotFoundException("Continent not found");
-            }
+
             return continent;
         }
 
@@ -47,20 +46,20 @@ namespace Core.Services
         public void UpdateContinent(Continent continent)
         {
             var existingContinent = _continentRepository.GetByIdAsync(continent.Id).Result;
-            if (existingContinent == null)
-            {
+
+            if (existingContinent is null)
                 throw new KeyNotFoundException("Continent to update not found");
-            }
+
             _continentRepository.Update(continent);
         }
 
         public void DeleteContinent(Continent continent)
         {
             var existingContinent = _continentRepository.GetByIdAsync(continent.Id).Result;
-            if (existingContinent == null)
-            {
+
+            if (existingContinent is null)
                 throw new KeyNotFoundException("Continent to delete not found");
-            }
+
             _continentRepository.Remove(continent);
         }
     }
