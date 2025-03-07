@@ -27,3 +27,4 @@ BBDD (postgreSQL)
 1. Clona el repositorio:
 
 git clone [https://github.com/waltermillan/CountriesOfTheWorld.git](https://github.com/waltermillan/CountriesOfTheWorld.git)
+YouTube: https://youtu.be/LM-5ZPD8xyk
