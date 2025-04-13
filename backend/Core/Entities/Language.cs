@@ -2,7 +2,7 @@
 
 namespace Core.Entities;
 
-[Table("language")]
+[Table("languages")]
 public class Language : BaseEntity
 {
     [Column("name")]

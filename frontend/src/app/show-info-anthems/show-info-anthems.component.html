@@ -1,0 +1,28 @@
+<div *ngIf="anthemInfo?.content != '', else noDataMessage">
+    <h4 style="text-align: center;">National Anthem</h4>
+
+    <div style="height: 20px;"></div>
+
+    <button (click)="playAnthem()" style="margin-right: 10px;">
+        <img src="assets/images/play-icon.svg"> play
+    </button>
+    <button (click)="stopAnthem()">
+        <img src="assets/images/stop-icon.svg"> Stop
+    </button>
+
+    <div style="height: 20px;"></div>
+
+    <h4>{{ anthemInfo?.motto }}</h4>
+</div>
+
+<ng-template #noDataMessage>
+    <h4 style="text-align: center;">National Anthem</h4>
+
+    <div style="height: 20px;"></div>
+
+    <p><span class="text-danger">No data available yet...</span></p>
+
+    <div style="height: 20px;"></div>
+
+    <h4>{{ anthemInfo?.motto }}</h4>
+</ng-template>

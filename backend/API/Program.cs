@@ -8,24 +8,28 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 
 // Add services to the container.
-builder.Services.ConfigureCors();
+builder.Services.ConfigureCors(builder.Configuration);
 builder.Services.AddAplicacionServices();
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<CountriesContext>(options =>
+// Set up the DbContext with the connection string
+builder.Services.AddDbContext<Context>(options =>
 {
-    string connectionString = builder.Configuration.GetConnectionString("CountriesConnection");
-    options.UseNpgsql(connectionString);
+    string connectionString = builder.Configuration.GetConnectionString("DbConnection");
+    options.UseNpgsql(connectionString);  // We use PostgreSQL here.
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Force automatically generated paths (as with [controller]) to be lowercase
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+// Configure Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the application middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -38,18 +42,20 @@ using (var scope = app.Services.CreateScope())
     var loggerFactory = services.GetRequiredService<ILoggerFactory>();
     try
     {
-        var context = services.GetRequiredService<CountriesContext>();
-        await context.Database.MigrateAsync();
+        var context = services.GetRequiredService<Infrastructure.Data.Context>();
+        await context.Database.MigrateAsync(); 
     }
     catch (Exception ex)
     {
         var logger = loggerFactory.CreateLogger<Program>();
-        logger.LogError(ex, "Ocurrió un error durante la migración");
+        logger.LogError(ex, "An error occurred during migration");
     }
 }
 
+var policyName = builder.Configuration.GetSection("CorsSettings:PolicyName").Get<string>();
+
 app.UseRouting();
-app.UseCors("AllowLocalhost");
+app.UseCors(policyName);
 app.UseAuthorization();
 app.MapControllers();
 

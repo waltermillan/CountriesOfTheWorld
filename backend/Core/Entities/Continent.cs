@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities;
-[Table("continent")]
+[Table("continents")]
 public class Continent : BaseEntity
 {
     [Column("name")]

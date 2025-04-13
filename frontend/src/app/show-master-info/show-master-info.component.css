@@ -1,0 +1,11 @@
+.custom-select {
+    background-color: #f5f5dc;
+    color: #222;
+    border: 1px solid #444;
+    padding: 10px;
+    border-radius: 5px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  

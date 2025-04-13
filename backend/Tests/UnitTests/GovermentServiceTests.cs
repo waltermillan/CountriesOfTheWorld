@@ -1,11 +1,7 @@
 ﻿using Core.Entities;
-using Core.Interfases;
+using Core.Interfaces;
 using Core.Services;
 using Moq;
-using System.Collections.Generic;
-using System.Linq; // Para usar Count()
-using System.Threading.Tasks;
-using Xunit;
 
 namespace Tests.UnitTests;
 
@@ -48,7 +44,7 @@ public class GovermentServiceTests
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(2, result.Count()); // Usamos Count() para contar los elementos
+        Assert.Equal(2, result.Count());
         Assert.Contains(result, p => p.Name == "Test1");
         Assert.Contains(result, p => p.Name == "Test2");
     }
@@ -100,7 +96,7 @@ public class GovermentServiceTests
         var mockGovermentRepository = new Mock<IGovermentRepository>();
         var goverment = new Goverment { Id = 9, Name = "NewGoverment1" };
 
-        mockGovermentRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Goverment { Id = 9, Name = "NewGoverment1" }); // Simulamos que el continente con Id 9 existe
+        mockGovermentRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Goverment { Id = 9, Name = "NewGoverment1" });
 
         mockGovermentRepository.Setup(repo => repo.Add(It.IsAny<Goverment>()));
 
@@ -120,7 +116,7 @@ public class GovermentServiceTests
         var mockGovermentRepository = new Mock<IGovermentRepository>();
         var goverment = new Goverment { Id = 9, Name = "Goverment1" };
 
-        mockGovermentRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Goverment { Id = 9, Name = "Goverment1" }); // Simulamos que el continente con Id 9 existe
+        mockGovermentRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Goverment { Id = 9, Name = "Goverment1" });
 
         mockGovermentRepository.Setup(repo => repo.Remove(It.IsAny<Goverment>()));
 
@@ -138,14 +134,14 @@ public class GovermentServiceTests
     {
         // Arrange
         var mockContinentRepository = new Mock<IContinentRepository>();
-        var continent = new Continent { Id = 999, Name = "NonExistingContinent" }; // ID que no existe
-        mockContinentRepository.Setup(repo => repo.GetByIdAsync(continent.Id)).ReturnsAsync((Continent)null); // Simulamos que el continente no existe.
+        var continent = new Continent { Id = 999, Name = "NonExistingContinent" };
+        mockContinentRepository.Setup(repo => repo.GetByIdAsync(continent.Id)).ReturnsAsync((Continent)null);
 
         var continentService = new ContinentService(mockContinentRepository.Object);
 
         // Act & Assert
         var exception = Assert.Throws<KeyNotFoundException>(() => continentService.UpdateContinent(continent));
-        Assert.Equal("Continent to update not found", exception.Message); // Verificamos que el mensaje de la excepción sea el esperado
+        Assert.Equal("Continent to update not found", exception.Message);
     }
 
     [Fact]
@@ -153,14 +149,14 @@ public class GovermentServiceTests
     {
         // Arrange
         var mockGovermentRepository = new Mock<IGovermentRepository>();
-        var goverment = new Goverment { Id = 999, Name = "NonExistingGoverment" }; // ID que no existe
-        mockGovermentRepository.Setup(repo => repo.GetByIdAsync(goverment.Id)).ReturnsAsync((Goverment)null); // Simulamos que el continente no existe.
+        var goverment = new Goverment { Id = 999, Name = "NonExistingGoverment" };
+        mockGovermentRepository.Setup(repo => repo.GetByIdAsync(goverment.Id)).ReturnsAsync((Goverment)null);
 
         var govermentService = new GovermentService(mockGovermentRepository.Object);
 
         // Act & Assert
         var exception = Assert.Throws<KeyNotFoundException>(() => govermentService.UpdateGoverment(goverment));
-        Assert.Equal("Goverment to update not found", exception.Message); // Verificamos que el mensaje de la excepción sea el esperado
+        Assert.Equal("Goverment to update not found", exception.Message);
     }
 
     [Fact]
@@ -168,13 +164,13 @@ public class GovermentServiceTests
     {
         // Arrange
         var mockGovermentRepository = new Mock<IGovermentRepository>();
-        var govermentId = 999; // ID que no existe en la base de datos
-        mockGovermentRepository.Setup(repo => repo.GetByIdAsync(govermentId)).ReturnsAsync((Goverment)null); // Simulamos que no se encuentra el continente.
+        var govermentId = 999;
+        mockGovermentRepository.Setup(repo => repo.GetByIdAsync(govermentId)).ReturnsAsync((Goverment)null);
 
         var govermentService = new GovermentService(mockGovermentRepository.Object);
 
         // Act & Assert
         var exception = await Assert.ThrowsAsync<KeyNotFoundException>(() => govermentService.GetGovermentById(govermentId));
-        Assert.Equal("Goverment not found", exception.Message); // Verificamos que el mensaje de la excepción sea el esperado
+        Assert.Equal("Goverment not found", exception.Message);
     }
 }

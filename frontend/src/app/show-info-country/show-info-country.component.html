@@ -1,0 +1,11 @@
+<h4>{{ countryInfo?.spanishName }} ( {{ countryInfo?.name }} )</h4>
+<div class="info-section" style="margin-bottom: 10px;">
+  <p><strong>Population:</strong> {{ countryInfo?.population | number:'1.0-0':'es-ES' }} residents</p>
+  <p><strong>Surface:</strong> {{ countryInfo?.surface | number:'1.0-0':'es-ES'}} km²</p>
+  <p><strong>Independence:</strong> {{ countryInfo?.independenceDay | date:'dd/MM/yyyy' }}</p>
+</div>
+<div class="info-section">
+  <p><strong>Continent:</strong> {{ continentInfo?.name }}</p>
+  <p><strong>Language:</strong> {{ languageInfo?.name }}</p>
+  <p><strong>Goverment's Form:</strong> {{ govermentInfo?.name }}</p>
+</div>

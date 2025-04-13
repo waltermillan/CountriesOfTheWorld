@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities;
-[Table("goverment")]
+[Table("goverments")]
 public class Goverment : BaseEntity
 {
     [Column("name")]

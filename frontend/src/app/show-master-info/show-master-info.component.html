@@ -1,0 +1,76 @@
+<div style="display: flex; height: 100vh; padding: 10px; box-sizing: border-box; overflow: hidden;">
+  <!-- left pane from select countries -->
+  <div style="width: 20%; padding: 10px; display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
+    <h3>Select a country</h3>
+    <select [(ngModel)]="selectedIdountry" (change)="onCountrySelect()" class="custom-select">
+      <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
+    </select>
+    <div *ngIf="showMessage">
+      <span class="text-danger">{{message}}</span>
+      <button class="btn btn-danger btn-sm" (click)="refresh()">Re try</button>
+    </div>
+
+    <!-- Version App -->
+    <div *ngIf="!showMessage" style="margin-top: auto;">
+      <span class="text-secondary">
+        <table style="width: 100%; border-collapse: collapse; text-align: center;" border="1">
+          <tr>
+            <td style="text-align: center;">{{appName}}</td>
+            <td style="text-align: center;">V {{appVersion}}</td>
+          </tr>
+          <tr>
+            <a href="assets/docs/UserManual.pdf" target="_blank">See Documentation</a>
+          </tr>
+        </table>
+        <br>
+      </span>
+    </div>
+  </div>
+
+  <div class="border-start" style="height: 100%;"></div>
+  
+  <div style="width: 80%; padding: 10px 20px 20px; display: flex; flex-direction: column; overflow-y: auto; height: 100%;">
+    <div *ngIf="countryInfo; else loading">
+      <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+        <tr>
+          <!-- Basic country information -->
+          <td style="width: 50%; vertical-align: top; padding: 10px 15px; border: 1px solid #ccc;">
+            <app-show-info-country [countryInfo]="countryInfo"></app-show-info-country>
+          </td>
+
+          <!-- Flags & Coat-of-arms -->
+          <td style="width: 50%; vertical-align: top; text-align: center; padding: 10px 15px; border: 1px solid #ccc;">
+            <table style="width: 100%;">
+              <tr>
+                <td style="width: 50%;vertical-align: top; ">
+                  <app-show-info-flag [countryId]="countryInfo.id"></app-show-info-flag>
+                </td>
+                <td style="width: 50%;vertical-align: top; ">
+                  <app-show-info-coat-of-arms [countryId]="countryInfo.id"></app-show-info-coat-of-arms>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <!-- Map -->
+          <td style="width: 50%; vertical-align: top; vertical-align: top; text-align: center; padding: 10px 15px; border: 1px solid #ccc;">
+            <app-show-info-map [countryInfo]="countryInfo"></app-show-info-map>
+          </td>
+          <!-- National Anthem -->
+          <td style="width: 50%; vertical-align: top; vertical-align: top; text-align: center; padding: 10px 15px; border: 1px solid #ccc;">
+            <app-show-info-anthems [anthemId]="countryInfo.anthemId"></app-show-info-anthems>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>
+    <img src="assets/images/loading-information.gif" style="max-width: 40px; max-height: 40px;">
+      Waiting for you to choose a country from the list..
+  </p>
+</ng-template>

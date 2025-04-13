@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InfoComponent } from './info/info.component';
+import { ShowMasterInfoComponent } from './show-master-info/show-master-info.component';  
 
 const routes: Routes = [
-  { path: '', component: InfoComponent },
-  { path: 'country-info/:id', component: InfoComponent }
+  { path: '', component: ShowMasterInfoComponent },
+  { path: 'show-info-country/:id', component: ShowMasterInfoComponent }
 ];
 
 @NgModule({

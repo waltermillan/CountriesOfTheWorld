@@ -1,5 +1,5 @@
 ﻿using Core.Entities;
-using Core.Interfases;
+using Core.Interfaces;
 using Core.Services;
 using Moq;
 
@@ -45,7 +45,7 @@ public class CountryServiceTests
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(2, result.Count()); // Usamos Count() para contar los elementos
+        Assert.Equal(2, result.Count()); 
         Assert.Contains(result, p => p.Name == "Country1");
         Assert.Contains(result, p => p.Name == "Country2");
     }
@@ -97,7 +97,7 @@ public class CountryServiceTests
         var mockCountryRepository = new Mock<ICountryRepository>();
         var country = new Country { Id = 9, Name = "NewCountry1" };
 
-        mockCountryRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Country { Id = 9, Name = "NewCountry1" }); // Simulamos que el continente con Id 9 existe
+        mockCountryRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Country { Id = 9, Name = "NewCountry1" }); 
 
         mockCountryRepository.Setup(repo => repo.Add(It.IsAny<Country>()));
 
@@ -117,7 +117,7 @@ public class CountryServiceTests
         var mockCountryRepository = new Mock<ICountryRepository>();
         var country = new Country { Id = 9, Name = "NewCountry1" };
 
-        mockCountryRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Country { Id = 9, Name = "NewCountry1" }); // Simulamos que el continente con Id 9 existe
+        mockCountryRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Country { Id = 9, Name = "NewCountry1" }); 
 
         mockCountryRepository.Setup(repo => repo.Remove(It.IsAny<Country>()));
 
@@ -135,17 +135,17 @@ public class CountryServiceTests
     {
         // Arrange
         var mockCountryRepository = new Mock<ICountryRepository>();
-        var country = new Country { Id = 999, Name = "NonExistingCountry" }; // ID que no existe
+        var country = new Country { Id = 999, Name = "NonExistingCountry" };
 
-        mockCountryRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Country { Id = 999, Name = "NonExistingCountry" }); // Simulamos que el continente con Id 9 existe
+        mockCountryRepository.Setup(repo => repo.GetByIdAsync(9)).ReturnsAsync(new Country { Id = 999, Name = "NonExistingCountry" }); 
 
-        mockCountryRepository.Setup(repo => repo.GetByIdAsync(country.Id)).ReturnsAsync((Country)null); // Simulamos que el continente no existe.
+        mockCountryRepository.Setup(repo => repo.GetByIdAsync(country.Id)).ReturnsAsync((Country)null);
 
         var countryService = new CountryService(mockCountryRepository.Object);
 
         // Act & Assert
         var exception = Assert.Throws<KeyNotFoundException>(() => countryService.UpdateCountry(country));
-        Assert.Equal("Country to update not found", exception.Message); // Verificamos que el mensaje de la excepción sea el esperado
+        Assert.Equal("Country to update not found", exception.Message);
     }
 
     [Fact]
@@ -153,16 +153,16 @@ public class CountryServiceTests
     {
         // Arrange
         var mockCountryRepository = new Mock<ICountryRepository>();
-        var countryId = 999; // ID que no existe en la base de datos
+        var countryId = 999;
 
-        mockCountryRepository.Setup(repo => repo.GetByIdAsync(countryId)).ReturnsAsync((Country)null); // Devuelve null para el ID 999
+        mockCountryRepository.Setup(repo => repo.GetByIdAsync(countryId)).ReturnsAsync((Country)null);
 
         var countryService = new CountryService(mockCountryRepository.Object);
 
         // Act & Assert
         var exception = await Assert.ThrowsAsync<KeyNotFoundException>(() => countryService.GetCountryById(countryId));
 
-        Assert.Equal("Country not found", exception.Message); // Verifica que el mensaje de la excepción sea "Country not found"
+        Assert.Equal("Country not found", exception.Message);
     }
 
 }

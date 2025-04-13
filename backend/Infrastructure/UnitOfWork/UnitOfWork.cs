@@ -1,18 +1,20 @@
-﻿using Core.Interfases;
+﻿using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
+
 namespace Infrastructure.UnitOfWork;
 
 public class UnitOfWork : IUnitOfWork, IDisposable
 {
-    private readonly CountriesContext _context;
+    private readonly Context _context;
     private ICountryRepository _countries;
     private ILanguageRepository _languages;
     private IGovermentRepository _goverments;
     private IContinentRepository _continents;
     private IAnthemRepository _anthems;
+    private ISymbolRepository _symbols;
 
-    public UnitOfWork(CountriesContext context)
+    public UnitOfWork(Context context)
     {
         _context = context;
     }
@@ -69,6 +71,16 @@ public class UnitOfWork : IUnitOfWork, IDisposable
                 _goverments = new GovermentRepository(_context);
 
             return _goverments;
+        }
+    }
+
+    public ISymbolRepository Symbols
+    {
+        get
+        {
+            if (_symbols is null)
+                _symbols = new SymbolRepository(_context);
+            return _symbols;
         }
     }
 

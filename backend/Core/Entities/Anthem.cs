@@ -2,7 +2,7 @@
 
 namespace Core.Entities;
 
-[Table("anthem")]
+[Table("anthems")]
 public class Anthem : BaseEntity
 {
     [Column("motto")]

@@ -1,7 +1,5 @@
 ﻿using Core.Entities;
-using Core.Interfases;
-using System.Collections.Generic;
-using System.Numerics;
+using Core.Interfaces;
 
 namespace Core.Services;
 
