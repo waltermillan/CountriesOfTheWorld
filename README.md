@@ -1,29 +1,30 @@
-# Proyecto CountriesOfTheWorld
-Visualizacion de paises del mundo sin usar APIs externas.
+# CountriesOfTheWorld Project
+Visualization of countries of the world without using external APIs.
 
-## Objetivo:
+## Objective:
 
-Practicar .NET (C#) / SQL y Angular (Typescript) / Patrones de diseño / Arquitectura Onion.
-familiarizarme con el uso de postgreSQL con Docker y DBeaver.
-Guardar imagenes en el assets de Angular y los audios de los himnos en la DB.
+Practice .NET (C#) / SQL and Angular (Typescript) / Design Patterns / Onion Architecture.
+Familiarize myself with the use of postgreSQL with Docker and DBeaver.
+Save images in Angular assets and hymn audios in DB.
 
-## Características
+## Features
 
 BACKEND:
-- Arquitectura Onion.
-- Principios SOLID.
-- Diseño de patrones: Repository, UnitOfWork
+- Onion architecture.
+- SOLID principles.
+- Pattern design: Repository, UnitOfWork
 
 FRONTEND:
-- Desarrollado con Angular 18.0.2
-- Orientado a módulos.
+- Developed with Angular 18.0.2.
+- Module oriented.
 
-BBDD (postgreSQL)
-- Escrito con PostgreSQL
-- Tablas (DDLs) y Datos (DMLs) => La idea es trabajar con datos propios sin APIs externas.
+DB (postgreSQL)
+- Written with PostgreSQL
+- Tables (DDLs) and Data (DMLs) => The idea is to work with own data without external APIs.
 
-## Instalación
+## Installation
 
-1. Clona el repositorio:
+1. Clone the repository:
 
 git clone [https://github.com/waltermillan/CountriesOfTheWorld.git](https://github.com/waltermillan/CountriesOfTheWorld.git)
+YouTube: https://youtu.be/LM-5ZPD8xyk
