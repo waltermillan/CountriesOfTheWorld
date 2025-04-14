@@ -55,6 +55,7 @@ Make sure you have the following installed:
 
 2. Follow the video guides for setup:
     - [1st Version Setup](https://youtu.be/LM-5ZPD8xyk)
+    - [2nd Version Setup](https://youtu.be/ekfzAAOC0io)
 
 3. Follow the rest of the installation steps provided in the documentation.
 
