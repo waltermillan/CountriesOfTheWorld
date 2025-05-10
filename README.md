@@ -24,7 +24,7 @@ To explain, roughly to people outside of programming, what is **BackEnd**, what 
 Familiarize myself with the use of **PostgreSQL** with Docker and **DBeaver**.
 
 ### Technologies:
-- **.NET (C#)** and **SQL Server**
+- **.NET (C#)** and **PostgreSQL**
 - **Angular (TypeScript)**
 - **Design Patterns**
 - **Onion Architecture**
